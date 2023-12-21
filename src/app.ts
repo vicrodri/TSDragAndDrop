@@ -64,6 +64,18 @@ class ProjectState extends State<Project> {
     );
 
     this.projects.push(project);
+    this.updateListeners();
+  }
+
+  moveProject(projectId: string, targetStatus: ProjectStatus) {
+    const project = this.projects.find((item) => item.id === projectId);
+    if (project && project.status !== targetStatus) {
+      project.status = targetStatus;
+      this.updateListeners();
+    }
+  }
+
+  private updateListeners() {
     for (const listenerFn of this.listeners) {
       listenerFn(this.projects.slice());
     }
@@ -251,8 +263,13 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> implements Drag
     }
   }
 
+  @autobind
   dropHandler(event: DragEvent): void {
-    console.log(event.dataTransfer!.getData("text/plain"));
+    const projectId = event.dataTransfer!.getData("text/plain");
+    projectState.moveProject(
+      projectId,
+      this.type === "active" ? ProjectStatus.Active : ProjectStatus.Finished
+    );
   }
 }
 
