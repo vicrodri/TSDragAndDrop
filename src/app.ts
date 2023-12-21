@@ -146,6 +146,12 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
 class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
   private project: Project;
 
+  get getPeople() {
+    return this.project.people === 1
+      ? `${this.project.people.toString()} person`
+      : `${this.project.people.toString()} people`;
+  }
+
   constructor(hostId: string, project: Project) {
     super("single-project", hostId, false, project.id);
     this.project = project;
@@ -158,7 +164,7 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
 
   renderContent(): void {
     this.element.querySelector("h2")!.textContent = this.project.title;
-    this.element.querySelector("h3")!.textContent = this.project.people.toString();
+    this.element.querySelector("h3")!.textContent = `${this.getPeople} assigned`;
     this.element.querySelector("p")!.textContent = this.project.description;
   }
 }
