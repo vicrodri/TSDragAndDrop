@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run build && lite-server",
-    "build": "webpack"
+    "build": "webpack",
+    "build-prod": "webpack --config webpack.config.prod.js"
   },
   "keywords": [
     "typescript",
@@ -15,6 +16,7 @@
   "author": "Victor Rodriguez",
   "license": "",
   "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0",
     "lite-server": "^2.5.4",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
